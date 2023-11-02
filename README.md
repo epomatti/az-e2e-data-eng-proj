@@ -10,25 +10,22 @@ Create the `.auto.tfvars` files and set the parameters as you prefer:
 cp azure/config/dev.tfvars azure/.auto.tfvars
 ```
 
-Check your public IP address to be added in the firewalls allow rules:
-
-```sh
-dig +short myip.opendns.com @resolver1.opendns.com
-```
-
-The [dataset][2] is already available in the `./dataset/` directory. Extract the files:
-
-```sh
-unzip tokyo2011.zip
-```
-
-Add your public IP address to the `public_ip_address_to_allow` variable.
+The [dataset][2] is already available in the `./dataset/` directory and will be uploaded to the storage.
 
 Create the resources on Azure:
 
 ```sh
 terraform -chdir="azure" init
 terraform -chdir="azure" apply -auto-approve
+```
+
+Trigger the pipeline to get the data into the stage filesystem:
+
+```sh
+az datafactory pipeline create-run \
+    --resource-group rg-olympics \
+    --name PrepareForDatabricks \
+    --factory-name adf-olympics-sandbox
 ```
 
 If you're not using Synapse immediately, pause the Synapse SQL pool to avoid costs while setting up the infrastructure:
