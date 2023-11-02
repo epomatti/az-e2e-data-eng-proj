@@ -1,5 +1,9 @@
 data "azuread_client_config" "current" {}
 
+locals {
+  tokyo_source = "${path.module}/../../../dataset/tokyo2011.zip"
+}
+
 resource "azurerm_storage_account" "lake" {
   name                      = "dls${var.workload}"
   resource_group_name       = var.group
@@ -23,8 +27,25 @@ resource "azurerm_role_assignment" "adlsv2" {
   principal_id         = data.azuread_client_config.current.object_id
 }
 
+resource "azurerm_storage_data_lake_gen2_filesystem" "source" {
+  name               = "raw-source"
+  storage_account_id = azurerm_storage_account.lake.id
+
+  depends_on = [
+    azurerm_role_assignment.adlsv2,
+  ]
+}
+
+resource "azurerm_storage_blob" "tokyo" {
+  name                   = "tokyo2011.zip"
+  storage_account_name   = azurerm_storage_account.lake.name
+  storage_container_name = azurerm_storage_data_lake_gen2_filesystem.source.name
+  type                   = "Block"
+  source                 = local.tokyo_source
+}
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "raw" {
-  name               = "rawdata"
+  name               = "raw-data"
   storage_account_id = azurerm_storage_account.lake.id
 
   depends_on = [
@@ -33,7 +54,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "raw" {
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "transf" {
-  name               = "transfdata"
+  name               = "transformed-data"
   storage_account_id = azurerm_storage_account.lake.id
 
   depends_on = [
