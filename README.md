@@ -37,5 +37,18 @@ If you're not using Synapse immediately, pause the Synapse SQL pool to avoid cos
 az synapse sql pool pause -n pool1 --workspace-name synw-olympics -g rg-olympics
 ```
 
+## Databricks
+
+The previous Azure run should have created the `databricks/.auto.tfvars` file to configure Databricks.
+
+Apply the Databricks configuration:
+
+> 💡 If you haven't yet, you need to login to Databricks, which will create Key Vault policies.
+
+```sh
+terraform -chdir="databricks" init
+terraform -chdir="databricks" apply -auto-approve
+```
+
 [1]: https://youtu.be/IaA9YNlg5hM?list=PL_ko60AZHL-pWXeO6YouiE-ZQlM02duKy
 [2]: https://www.kaggle.com/datasets/arjunprasadsarkhel/2021-olympics-in-tokyo
