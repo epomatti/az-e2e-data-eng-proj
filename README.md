@@ -7,7 +7,7 @@ Complete data ingestion, transformation and load using Azure services.
 Create the `.auto.tfvars` files and set the parameters as you prefer:
 
 ```sh
-cp azure/
+cp azure/config/dev.tfvars azure/.auto.tfvars
 ```
 
 Create the resources on Azure:
