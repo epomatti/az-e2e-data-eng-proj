@@ -53,6 +53,15 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "raw" {
   ]
 }
 
+resource "azurerm_storage_data_lake_gen2_filesystem" "stage" {
+  name               = "staged-data"
+  storage_account_id = azurerm_storage_account.lake.id
+
+  depends_on = [
+    azurerm_role_assignment.adlsv2,
+  ]
+}
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "transf" {
   name               = "transformed-data"
   storage_account_id = azurerm_storage_account.lake.id
