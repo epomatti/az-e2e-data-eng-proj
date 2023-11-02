@@ -59,3 +59,17 @@ module "databricks" {
 
   sku = var.dbw_sku
 }
+
+module "synapse" {
+  source   = "./modules/synapse"
+  workload = local.workload
+  group    = azurerm_resource_group.default.name
+  location = azurerm_resource_group.default.location
+
+  sku_name                             = var.synapse_sku_name
+  sql_administrator_login              = var.synapse_sql_administrator_login
+  sql_administrator_login_password     = var.synapse_sql_administrator_login_password
+  storage_data_lake_gen2_filesystem_id = module.datalake.synapse_transf_filesystem_id
+  public_ip_address_to_allow           = var.public_ip_address_to_allow
+  datalake_storage_account_id          = module.datalake.storage_account_id
+}
