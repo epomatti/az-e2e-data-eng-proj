@@ -20,13 +20,6 @@ resource "azurerm_resource_group" "default" {
   location = var.location
 }
 
-# module "vnet" {
-#   source   = "./modules/vnet"
-#   workload = local.workload
-#   group    = azurerm_resource_group.default.name
-#   location = azurerm_resource_group.default.location
-# }
-
 module "aad" {
   source   = "./modules/aad"
   workload = local.workload

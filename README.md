@@ -16,7 +16,11 @@ Check your public IP address to be added in the firewalls allow rules:
 dig +short myip.opendns.com @resolver1.opendns.com
 ```
 
-Download the [dataset][2] and extract the files to the directory `./dataset/`.
+The [dataset][2] is already available in the `./dataset/` directory. Extract the files:
+
+```sh
+unzip tokyo2011.zip
+```
 
 Add your public IP address to the `public_ip_address_to_allow` variable.
 
