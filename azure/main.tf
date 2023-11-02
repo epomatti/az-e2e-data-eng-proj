@@ -72,3 +72,30 @@ module "synapse" {
   public_ip_address_to_allow           = var.public_ip_address_to_allow
   datalake_storage_account_id          = module.datalake.storage_account_id
 }
+
+module "keyvault" {
+  source   = "./modules/keyvault"
+  workload = local.workload
+  group    = azurerm_resource_group.default.name
+  location = azurerm_resource_group.default.location
+
+  datalake_connection_string               = module.datalake.primary_connection_string
+  datalake_access_key                      = module.datalake.primary_access_key
+  databricks_sp_secret                     = module.aad.service_credential_secret_value
+  synapse_sql_administrator_login          = var.synapse_sql_administrator_login
+  synapse_sql_administrator_login_password = var.synapse_sql_administrator_login_password
+}
+
+resource "local_file" "databricks_tfvars" {
+  content = <<EOF
+workspace_url        = "${module.databricks[0].workspace_url}"
+keyvault_resource_id = "${module.keyvault.id}"
+keyvault_uri         = "${module.keyvault.vault_uri}"
+dls_name             = "${module.datalake.storage_account_name}"
+sp_tenant_id         = "${module.aad.tenant_id}"
+sp_client_id         = "${module.aad.client_id}"
+synapse_sql_endpoint = "${var.create_synapse == true ? module.synapse[0].connectivity_endpoints.sql : ""}"
+EOF
+
+  filename = "${path.module}/../databricks/.auto.tfvars"
+}

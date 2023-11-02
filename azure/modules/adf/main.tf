@@ -92,7 +92,7 @@ resource "azapi_resource" "excel_raw_source" {
           "fileName" : "*.xlsx",
           "fileSystem" : "raw-data"
         },
-        "sheetIndex": 0,
+        "sheetIndex" : 0,
         "firstRowAsHeader" : true
       }
     }
@@ -118,8 +118,8 @@ resource "azapi_resource" "csv_sink" {
         },
         "columnDelimiter" : ",",
         "escapeChar" : "\\",
-        "firstRowAsHeader" : false,
-        "quoteChar" : "\"",
+        "firstRowAsHeader" : true,
+        "quoteChar" : "",
       },
       "schema" : []
     }
@@ -207,7 +207,7 @@ resource "azapi_resource" "prepare" {
               "storeSettings" : {
                 "type" : "AzureBlobFSReadSettings",
                 "recursive" : false,
-                "wildcardFileName": "*.xlsx"
+                "wildcardFileName" : "*.xlsx"
               }
             },
             "sink" : {
