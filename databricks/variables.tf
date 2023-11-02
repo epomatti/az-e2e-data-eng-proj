@@ -19,6 +19,10 @@ variable "dls_name" {
   type = string
 }
 
+variable "dls_filesystem_stage" {
+  type = string
+}
+
 variable "sp_tenant_id" {
   type = string
 }

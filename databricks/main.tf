@@ -28,22 +28,13 @@ resource "databricks_cluster" "shared_autoscaling" {
 
   spark_env_vars = {
     DLS_NAME             = "${var.dls_name}"
+    DLS_FILESYSTEM_STAGE = "${var.dls_filesystem_stage}"
     SP_TENANT_ID         = "${var.sp_tenant_id}"
     SP_CLIENT_ID         = "${var.sp_client_id}"
     SYNAPSE_SQL_ENDPOINT = "${var.synapse_sql_endpoint}"
   }
 }
 
-# resource "databricks_library" "mssql_jdbc" {
-#   cluster_id = databricks_cluster.shared_autoscaling.id
-#   maven {
-#     coordinates = "com.microsoft.sqlserver:mssql-jdbc:12.4.1.jre11"
-#   }
-# }
-
-# TODO: initial_manage_principal
-
-# TODO: Implement service principal
 resource "databricks_secret_scope" "kv" {
   name = "keyvault-managed"
 
@@ -56,12 +47,7 @@ resource "databricks_secret_scope" "kv" {
 data "databricks_current_user" "me" {
 }
 
-# resource "databricks_notebook" "keyvault_scala" {
-#   source = "${path.module}/notebooks/mssql.scala"
-#   path   = "${data.databricks_current_user.me.home}/mssql"
-# }
-
-# resource "databricks_notebook" "lake" {
-#   source = "${path.module}/notebooks/dls.py"
-#   path   = "${data.databricks_current_user.me.home}/datalake"
-# }
+resource "databricks_notebook" "tokyo" {
+  source = "${path.module}/notebooks/tokyo-olympic.ipynb"
+  path   = "${data.databricks_current_user.me.home}/tokyo-olympic"
+}
