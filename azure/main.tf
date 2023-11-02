@@ -49,6 +49,7 @@ module "adf" {
 }
 
 module "databricks" {
+  count    = var.create_databricks == true ? 1 : 0
   source   = "./modules/databricks"
   workload = local.workload
   group    = azurerm_resource_group.default.name
@@ -58,6 +59,7 @@ module "databricks" {
 }
 
 module "synapse" {
+  count    = var.create_synapse == true ? 1 : 0
   source   = "./modules/synapse"
   workload = local.workload
   group    = azurerm_resource_group.default.name

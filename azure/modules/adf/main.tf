@@ -71,7 +71,6 @@ resource "azapi_resource" "unzip" {
       "schema" : []
     }
   })
-
 }
 
 resource "azapi_resource" "pipeline_unzip" {
@@ -104,7 +103,7 @@ resource "azapi_resource" "pipeline_unzip" {
                 "type" : "BinaryReadSettings",
                 "compressionProperties" : {
                   "type" : "ZipDeflateReadSettings",
-                  "preserveZipFileNameAsFolder": false,
+                  "preserveZipFileNameAsFolder" : false,
                 }
               }
             },
@@ -135,3 +134,48 @@ resource "azapi_resource" "pipeline_unzip" {
     }
   })
 }
+
+# resource "azapi_resource" "zip_source" {
+#   type      = "Microsoft.DataFactory/factories/datasets@2018-06-01"
+#   name      = "TokyoZipSourceDataset"
+#   parent_id = azurerm_data_factory.default.id
+#   body = jsonencode({
+#     "properties" : {
+#       "linkedServiceName" : {
+#         "referenceName" : "${local.data_lake_name}",
+#         "type" : "LinkedServiceReference"
+#       },
+#       "annotations" : [],
+#       "type" : "Binary",
+#       "typeProperties" : {
+#         "location" : {
+#           "type" : "AzureBlobFSLocation",
+#           "fileName" : "tokyo2011.zip",
+#           "fileSystem" : "raw-data"
+#         },
+#         "compression" : {
+#           "type" : "ZipDeflate"
+#         }
+#       }
+#     }
+#   })
+# }
+
+# "properties": {
+#         "type": "Excel",
+#         "linkedServiceName": {
+#             "referenceName": "<Azure Blob Storage linked service name>",
+#             "type": "LinkedServiceReference"
+#         },
+#         "schema": [ < physical schema, optional, retrievable during authoring > ],
+#         "typeProperties": {
+#             "location": {
+#                 "type": "AzureBlobStorageLocation",
+#                 "container": "containername",
+#                 "folderPath": "folder/subfolder",
+#             },
+#             "sheetName": "MyWorksheet",
+#             "range": "A3:H5",
+#             "firstRowAsHeader": true
+#         }
+#     }

@@ -9,11 +9,19 @@ variable "public_ip_address_to_allow" {
 }
 
 ### Databricks ###
+variable "create_databricks" {
+  type = bool
+}
+
 variable "dbw_sku" {
   type = string
 }
 
 ### Synapse ###
+variable "create_synapse" {
+  type = bool
+}
+
 variable "synapse_sku_name" {
   type = string
 }
