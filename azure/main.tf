@@ -40,3 +40,13 @@ module "datalake" {
 
   databricks_service_principal_object_id = module.aad.service_principal_object_id
 }
+
+module "adf" {
+  source   = "./modules/adf"
+  workload = local.workload
+  group    = azurerm_resource_group.default.name
+  location = azurerm_resource_group.default.location
+
+  datalake_primary_dfs_endpoint = module.datalake.primary_dfs_endpoint
+  datalake_primary_access_key   = module.datalake.primary_access_key
+}
