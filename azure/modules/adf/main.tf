@@ -207,6 +207,7 @@ resource "azapi_resource" "prepare" {
               "storeSettings" : {
                 "type" : "AzureBlobFSReadSettings",
                 "recursive" : false,
+                "wildcardFileName": "*.xlsx"
               }
             },
             "sink" : {
