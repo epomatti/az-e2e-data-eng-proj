@@ -50,3 +50,12 @@ module "adf" {
   datalake_primary_dfs_endpoint = module.datalake.primary_dfs_endpoint
   datalake_primary_access_key   = module.datalake.primary_access_key
 }
+
+module "databricks" {
+  source   = "./modules/databricks"
+  workload = local.workload
+  group    = azurerm_resource_group.default.name
+  location = azurerm_resource_group.default.location
+
+  sku = var.dbw_sku
+}
