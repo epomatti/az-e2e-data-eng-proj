@@ -119,7 +119,7 @@ resource "azapi_resource" "csv_sink" {
         "columnDelimiter" : ",",
         "escapeChar" : "\\",
         "firstRowAsHeader" : true,
-        "quoteChar" : "",
+        "quoteChar" : "\"",
       },
       "schema" : []
     }
