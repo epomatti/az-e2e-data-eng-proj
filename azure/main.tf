@@ -88,7 +88,7 @@ module "keyvault" {
 
 resource "local_file" "databricks_tfvars" {
   content = <<EOF
-workspace_url        = "${module.databricks[0].workspace_url}"
+workspace_url        = "${var.create_databricks == true ? module.databricks[0].workspace_url : ""}"
 keyvault_resource_id = "${module.keyvault.id}"
 keyvault_uri         = "${module.keyvault.vault_uri}"
 dls_name             = "${module.datalake.storage_account_name}"
