@@ -42,6 +42,13 @@ resource "databricks_library" "fsspec" {
   }
 }
 
+resource "databricks_library" "adlfs" {
+  cluster_id = databricks_cluster.shared_autoscaling.id
+  pypi {
+    package = "adlfs"
+  }
+}
+
 resource "databricks_secret_scope" "kv" {
   name = "keyvault-managed"
 
