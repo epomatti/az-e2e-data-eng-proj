@@ -19,7 +19,7 @@ resource "databricks_cluster" "shared_autoscaling" {
   cluster_name            = "Shared Autoscaling"
   spark_version           = data.databricks_spark_version.latest_lts.id
   node_type_id            = var.databricks_node_type_id
-  autotermination_minutes = 20
+  autotermination_minutes = 60
 
   autoscale {
     min_workers = 1
@@ -35,6 +35,7 @@ resource "databricks_cluster" "shared_autoscaling" {
   }
 }
 
+# This was just for Pandas testing - not really required for this example
 resource "databricks_library" "fsspec" {
   cluster_id = databricks_cluster.shared_autoscaling.id
   pypi {
@@ -42,6 +43,7 @@ resource "databricks_library" "fsspec" {
   }
 }
 
+# This was just for Pandas testing - not really required for this example
 resource "databricks_library" "adlfs" {
   cluster_id = databricks_cluster.shared_autoscaling.id
   pypi {
