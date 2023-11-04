@@ -10,6 +10,12 @@ Create the `.auto.tfvars` files and set the parameters as you prefer:
 cp azure/config/dev.tfvars azure/.auto.tfvars
 ```
 
+Check your public IP address to be added in the firewalls allow rules:
+
+```sh
+dig +short myip.opendns.com @resolver1.opendns.com
+```
+
 The [dataset][2] is already available in the `./dataset/` directory and will be uploaded to the storage.
 
 Create the resources on Azure:
