@@ -53,5 +53,20 @@ terraform -chdir="databricks" init
 terraform -chdir="databricks" apply -auto-approve
 ```
 
+Once Databricks is running, execute the notebook to generate the data.
+
+## Synapse
+
+Connect to Synapse Studio.
+
+Enter the Data blade to create a new `Lake Database` using the studio and generate the tables from the `transformed-data` filesystem.
+
+Upload or copy the SQL test script:
+
+```sh
+az synapse sql-script create -f scripts/synapse-queries.sql -n Init --workspace-name synw-olympics --sql-pool-name pool1 --sql-database-name pool1
+```
+
+
 [1]: https://youtu.be/IaA9YNlg5hM?list=PL_ko60AZHL-pWXeO6YouiE-ZQlM02duKy
 [2]: https://www.kaggle.com/datasets/arjunprasadsarkhel/2021-olympics-in-tokyo
