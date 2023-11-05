@@ -4,6 +4,10 @@ Complete data ingestion, transformation and load using Azure services.
 
 > Implementation reference from [this video][1].
 
+<img src=".assets/azure-e2e.png" />
+
+## Azure Infrastructure
+
 Create the `.auto.tfvars` files and set the parameters as you prefer:
 
 ```sh
